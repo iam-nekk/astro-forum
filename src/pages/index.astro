@@ -1,6 +1,7 @@
 ---
 import type { Session } from '@auth/core/types';
 import { Auth, SignIn, SignOut } from 'auth-astro/components';
+import Posts from '../components/Posts.astro'
 ---
 
 <html lang="en">
@@ -32,5 +33,6 @@ import { Auth, SignIn, SignOut } from 'auth-astro/components';
         }
     }}
     </Auth>
+    <Posts/>
 </body>
 </html>

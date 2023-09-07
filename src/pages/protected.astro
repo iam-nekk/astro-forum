@@ -1,8 +1,24 @@
 ---
 import { getSession } from 'auth-astro/server';
+import { createPost } from '../api/posts';
 
 let session = await getSession(Astro.request)
 if (!session) return Astro.redirect("/")
+
+if (Astro.request.method === "POST"){
+  try {
+    const data = await Astro.request.formData()
+    const titlee = data.get("title")?.toString()
+    const author = session.user?.name
+
+    if (!titlee) return // todo: validation
+    if (!author) return
+    createPost(titlee, author)
+  }
+  catch {
+
+  }
+}
 ---
 
 <html lang="en">
@@ -17,5 +33,10 @@ if (!session) return Astro.redirect("/")
   <body>
     <h1>Astro</h1>
     <p>Only signed in users can see this page.</p>
+    <form method="post">
+      <input type="text" name="title" id="title"><br>
+      <textarea name="content" id="content" cols="30" rows="10">!! ignored !!</textarea>
+      <button>submit</button>
+    </form>
   </body>
 </html>
